@@ -1,0 +1,28 @@
+<h1>INDEX</h1>
+<% if @user %>
+    <p>email:<%= @user.email %></p>
+    <p>ID:<%= @user.id %></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Todo</th>
+                <th colspan="3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @user.todos.each do |todo| %>
+                <tr>
+                    <td><%= todo.title %></td>
+                    <td><%= link_to 'Show', todo %></td>
+                    <td><%= link_to 'Edit', edit_todo_path(todo.id) %></td>
+                    <td>
+                        <%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are yiu sure?' } %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <br>
+    <%= link_to 'New Todo', new_todo_path %>
+<% end %>

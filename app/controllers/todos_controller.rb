@@ -1,4 +1,5 @@
 class TodosController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_todo, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -14,6 +15,8 @@ class TodosController < ApplicationController
 
     def create
         @todo = Todo.create(todo_params)
+        # ログインユーザーのIDを挿入
+        @todo.User_id = current_user.id
         respond_to do |format|
             if @todo.save
                 format.html {redirect_to @todo, notice: 'User was successfully created!'}
@@ -39,7 +42,7 @@ class TodosController < ApplicationController
     def destroy
         @todo.destroy
         respond_to do |format|
-            format.html {redirect_to todo_url, notice: 'User was successfully destroyed!'}
+            format.html {redirect_to root_url, notice: 'User was successfully destroyed!'}
         end
     end
 
